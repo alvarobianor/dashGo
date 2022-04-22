@@ -7,6 +7,16 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
+const getRandomValues = (num: number) => {
+  const aux = [];
+
+  for (let index = 0; index < num; index++) {
+    aux.push(parseInt(Number(Math.random() * 10000).toFixed(0)));
+  }
+
+  return aux;
+};
+
 const options: ApexOptions = {
   chart: {
     toolbar: {
@@ -70,46 +80,14 @@ const options: ApexOptions = {
 const series = [
   {
     name: "series1",
-    data: [
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-    ],
+    data: getRandomValues(15),
   },
 ];
 
 const series2 = [
   {
     name: "series2",
-    data: [
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-      parseInt(Number(Math.random() * 10000).toFixed(0)),
-    ],
+    data: getRandomValues(15),
   },
 ];
 
