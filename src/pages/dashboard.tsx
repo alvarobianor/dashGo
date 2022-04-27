@@ -102,7 +102,7 @@ export default function DashBoard() {
         <SimpleGrid
           flex="1"
           gap="4"
-          minChildWidth="320px"
+          minChildWidth="400px"
           alignItems="flex-start"
         >
           <Box
