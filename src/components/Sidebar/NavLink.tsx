@@ -1,4 +1,10 @@
-import { Icon, Link, LinkProps, Text } from "@chakra-ui/react";
+import {
+  Icon,
+  Link,
+  LinkProps,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { ElementType } from "react";
 
 type Props = LinkProps & {
