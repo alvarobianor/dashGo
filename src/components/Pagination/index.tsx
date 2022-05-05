@@ -3,7 +3,12 @@ import { PaginationItem } from "./PaginationItem";
 
 export function Pagination() {
   return (
-    <Flex flexDirection="row" mt="8" justify="space-between" align="center">
+    <Flex
+      flexDirection={["column", "row"]}
+      mt="8"
+      justify="space-between"
+      align="center"
+    >
       <Box>
         <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
       </Box>
