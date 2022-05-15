@@ -1,31 +1,53 @@
 import {
-  Flex,
-  SimpleGrid,
   Box,
-  Text,
-  theme,
-  Heading,
   Button,
-  Icon,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Checkbox,
-  Tbody,
-  Td,
   Divider,
-  VStack,
+  Flex,
+  Heading,
   HStack,
+  SimpleGrid,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { RiAddLine, RiEditLine } from "react-icons/ri";
 import { Input } from "../../components/Form/Input";
 import { Header } from "../../components/Header";
-import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type SubmitFormData = {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+};
+
+const submitFormSchema = yup.object().shape({
+  name: yup.string().required("Nome obrigatório"),
+  email: yup.string().required("E-mail obrigatório").email("Formato inválido"),
+  password: yup
+    .string()
+    .required("Senha obrigatória")
+    .min(6, "No mínimo 6 caracteres"),
+  password_confirmation: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Senhas devem coinsidir"),
+});
+
 export default function UserCreate() {
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(submitFormSchema),
+  });
+
+  const { errors } = formState;
+
+  const handleCreateUser: SubmitHandler<SubmitFormData> = async (data) => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    console.log(data);
+  };
+
   return (
     <Box>
       <Header />
@@ -33,7 +55,18 @@ export default function UserCreate() {
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <Sidebar />
 
-        <Box flex="1" borderRadius={8} bg="gray.800" p={["6", "8"]}>
+        <Box
+          as="form"
+          flex="1"
+          borderRadius={8}
+          bg="gray.800"
+          p={["6", "8"]}
+          onSubmit={handleSubmit(
+            handleCreateUser as unknown as SubmitHandler<{
+              [x: string]: string;
+            }>
+          )}
+        >
           <Heading size="lg" fontWeight="normal">
             Criar usuário
           </Heading>
@@ -41,16 +74,31 @@ export default function UserCreate() {
 
           <VStack spacing={["6", "8"]}>
             <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
-              <Input name="name" label="Nome completo" />
-              <Input name="email" type="email" label="E-mail" />
+              <Input
+                label="Nome completo"
+                error={errors.name}
+                {...register("name")}
+              />
+              <Input
+                type="email"
+                label="E-mail"
+                error={errors.email}
+                {...register("email")}
+              />
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
-              <Input name="password" type="password" label="Senha" />
               <Input
-                name="password_confirmation"
+                type="password"
+                label="Senha"
+                error={errors.password}
+                {...register("password")}
+              />
+              <Input
                 type="password"
                 label="Confirmação da senha"
+                error={errors.password_confirmation}
+                {...register("password_confirmation")}
               />
             </SimpleGrid>
           </VStack>
@@ -61,7 +109,13 @@ export default function UserCreate() {
                   Cancelar
                 </Button>
               </Link>
-              <Button colorScheme="pink">Salvar</Button>
+              <Button
+                colorScheme="pink"
+                type="submit"
+                isLoading={formState.isSubmitting}
+              >
+                Salvar
+              </Button>
             </HStack>
           </Flex>
         </Box>
